@@ -4,16 +4,7 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
-void test();
 
-class ObjectDraw : public std::vector<sf::Drawable>
-{
-private:
-protected:
-    sf::RenderWindow *window;
-public:
-    void draw();
-};
 
 class KeyFunction
 {
@@ -49,7 +40,7 @@ public:
     ~Event();
 };
 
-class System : protected Window, protected Event, protected ObjectDraw
+class System : protected Window, protected Event
 {
 private:
     void config();
@@ -60,26 +51,3 @@ public:
 };
 
 //===========================
-class Circle : public KeyFunction, public sf::CircleShape
-{
-private:
-    sf::Vector2f position, speed;
-protected:
-    void up(), down(), right(), left();
-    void update();
-public:
-    Circle();
-    ~Circle();
-    void setPosition(float x, float y);
-    void setSpeed(float vx, float vy);
-};
-
-class MyApplication : private System
-{
-private:
-    void config();
-public:
-    MyApplication();
-    ~MyApplication();
-    void run();
-};

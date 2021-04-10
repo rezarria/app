@@ -64,12 +64,13 @@ void Event::process()
 
 System::System()
 {
-    ObjectDraw::window = Event::window = Window::window;
+    Event::window = Window::window;
     Window::setup(sf::VideoMode(1280, 720), "NULL");
 }
 
 System::~System()
-{}
+{
+}
 
 void System::update()
 {
@@ -78,78 +79,4 @@ void System::update()
         Window::update();
         Event::update();
     }
-}
-
-Circle::Circle()
-{
-    std::cout << "[Circle] is created!" << std::endl;
-}
-
-void Circle::setPosition(float x, float y)
-{
-    position.x = x;
-    position.y = y;
-}
-
-void Circle::setSpeed(float vx, float vy)
-{
-    speed.x = vx;
-    speed.y = vy;
-}
-
-void Circle::update()
-{
-    CircleShape::setPosition(position);
-    std::cout << "[Circle]'s position is updated!" << std::endl;
-}
-
-void Circle::up()
-{
-    position.y += speed.y;
-}
-
-void Circle::down()
-{
-    position.y -= speed.y;
-}
-
-void Circle::right()
-{
-    position.x += speed.x;
-}
-
-void Circle::left()
-{
-    position.x -= speed.y;
-}
-
-void test()
-{
-    std::cout << "FFF" << std::endl;
-}
-
-MyApplication::MyApplication()
-{
-    config();
-    std::cout << "[APP] is created!" << std::endl;
-}
-
-MyApplication::~MyApplication()
-{
-    std::cout << "[APP] is destroy!" << std::endl;
-}
-
-void MyApplication::config()
-{
-    ObjectDraw::resize(1);
-    Circle* circle = &ObjectDraw::vector::back();
-    //circle.setPosition(630, 360);
-    //circle.setFillColor(sf::Color::Green);
-    //circle.setRadius(10.0f);
-}
-
-void ObjectDraw::draw()
-{
-    for (sf::Drawable* obj ::* this)
-        window->draw(*obj);
 }
