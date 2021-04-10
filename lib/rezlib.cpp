@@ -62,6 +62,17 @@ void Event::process()
     }
 }
 
+void ShapeDraw::draw()
+{
+    for (sf::Shape *object : *this)
+        window->draw(*object);
+}
+
+sf::CircleShape &ShapeDraw::usingCircleAt(size_t x)
+{
+    return *(sf::CircleShape *)&(this->at(x));
+}
+
 System::System()
 {
     Event::window = Window::window;

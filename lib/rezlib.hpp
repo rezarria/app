@@ -40,6 +40,15 @@ public:
     ~Event();
 };
 
+class ShapeDraw : public std::vector<sf::Shape*>
+{
+    protected:
+        sf::RenderWindow *window;
+    public:
+        void draw();
+        sf::CircleShape &usingCircleAt(size_t x);
+};
+
 class System : protected Window, protected Event
 {
 private:
