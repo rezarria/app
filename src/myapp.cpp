@@ -60,9 +60,18 @@ MyApplication::~MyApplication()
 
 void MyApplication::config()
 {
+    System::ShapeDraw::push_back(new sf::CircleShape);
+    System::ShapeDraw::circle().setRadius(20.0f);
+    System::ShapeDraw::circle().setFillColor(sf::Color::Red);
+    Event::function = (KeyFunction *)&ShapeDraw::circle();
 }
 
 void MyApplication::run()
 {
     System::update();
+}
+
+Base::Base()
+{
+    window = NULL;
 }

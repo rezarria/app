@@ -28,6 +28,26 @@ void Window::setup(sf::VideoMode videoMode, std::string name)
     std::cout << "[Window] is modfied!" << std::endl;
 }
 
+KeyBoard::KeyBoard()
+{
+    window = NULL;
+}
+
+KeyBoard::~KeyBoard()
+{
+
+}
+
+void KeyBoard::released()
+{
+    
+}
+
+void KeyBoard::pressed()
+{
+
+}
+
 Event::Event()
 {
     event = new sf::Event;
@@ -56,8 +76,9 @@ void Event::process()
         window->close();
         std::cout << "[Event] Window is closing.." << std::endl;
         break;
-
-    default:
+    case sf::Event::KeyPressed:
+        break;
+    case sf::Event::KeyReleased:
         break;
     }
 }
@@ -68,14 +89,33 @@ void ShapeDraw::draw()
         window->draw(*object);
 }
 
-sf::CircleShape &ShapeDraw::usingCircleAt(size_t x)
+sf::CircleShape &ShapeDraw::circle(size_t x)
 {
-    return *(sf::CircleShape *)&(this->at(x));
+    if (x == -1)
+        return *(sf::CircleShape *)back();
+    else
+        return *(sf::CircleShape *)at(x);
+}
+
+sf::ConvexShape &ShapeDraw::convex(size_t x)
+{
+    if (x == -1)
+        return *(sf::ConvexShape *)back();
+    else
+        return *(sf::ConvexShape *)at(x);
+}
+
+sf::RectangleShape &ShapeDraw::rectangle(size_t x)
+{
+    if (x == -1)
+        return *(sf::RectangleShape *)back();
+    else
+        return *(sf::RectangleShape *)at(x);
 }
 
 System::System()
 {
-    Event::window = Window::window;
+    ShapeDraw::window = Event::window = Window::window;
     Window::setup(sf::VideoMode(1280, 720), "NULL");
 }
 
@@ -87,7 +127,8 @@ void System::update()
 {
     while (Window::window->isOpen())
     {
-        Window::update();
         Event::update();
+        ShapeDraw::draw();
+        Window::update();
     }
 }

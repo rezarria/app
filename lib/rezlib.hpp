@@ -5,6 +5,26 @@
 #include <cmath>
 #include <algorithm>
 
+class Base
+{
+protected:
+    sf::RenderWindow *window;
+
+public:
+    Base();
+};
+
+class KeyBoard : protected Base
+{
+protected:
+    KeyFunction *function;
+
+public:
+    KeyBoard();
+    ~KeyBoard();
+    void released();
+    void pressed();
+};
 
 class KeyFunction
 {
@@ -15,44 +35,47 @@ protected:
     virtual void left() = 0;
 };
 
-class Window
+class Window : protected Base
 {
 protected:
-    sf::RenderWindow* window;
     void update();
     void setup(sf::VideoMode videoMode, std::string name);
+
 public:
     Window();
     ~Window();
 };
 
-class Event
+class Event : protected KeyBoard
 {
 private:
     void process();
+
 protected:
-    KeyFunction* function;
-    sf::Event* event;
-    sf::RenderWindow* window;
+    sf::Event *event;
+    sf::RenderWindow *window;
     void update();
+
 public:
     Event();
     ~Event();
 };
 
-class ShapeDraw : public std::vector<sf::Shape*>
+class ShapeDraw : public std::vector<sf::Shape *>, protected Base
 {
-    protected:
-        sf::RenderWindow *window;
-    public:
-        void draw();
-        sf::CircleShape &usingCircleAt(size_t x);
+protected:
+public:
+    void draw();
+    sf::CircleShape &circle(size_t x = -1);
+    sf::ConvexShape &convex(size_t x = -1);
+    sf::RectangleShape &rectangle(size_t x = -1);
 };
 
-class System : protected Window, protected Event
+class System : protected Window, protected Event, protected ShapeDraw
 {
 private:
     void config();
+
 public:
     System();
     ~System();
